@@ -1,46 +1,81 @@
-/* --- PHẦN 1: DỮ LIỆU --- */
+/* =========================================
+   PHẦN 1: CƠ SỞ DỮ LIỆU (DATABASE)
+   ========================================= */
 
+// 1. Danh sách Nguyên tố (Thêm đủ các nhóm chính để bảng đẹp hơn)
 const elementsData = [
+    // Hàng 1
     { z: 1, sym: "H", name: "Hydrogen", group: "non-metal", x: 1, y: 1 },
     { z: 2, sym: "He", name: "Helium", group: "noble-gas", x: 18, y: 1 },
+
+    // Hàng 2
     { z: 3, sym: "Li", name: "Lithium", group: "alkali", x: 1, y: 2 },
+    { z: 4, sym: "Be", name: "Beryllium", group: "alkaline-earth", x: 2, y: 2 },
+    { z: 5, sym: "B", name: "Boron", group: "metalloid", x: 13, y: 2 }, // Đã thêm Boron
     { z: 6, sym: "C", name: "Carbon", group: "non-metal", x: 14, y: 2 },
     { z: 7, sym: "N", name: "Nitrogen", group: "non-metal", x: 15, y: 2 },
     { z: 8, sym: "O", name: "Oxygen", group: "non-metal", x: 16, y: 2 },
+    { z: 9, sym: "F", name: "Fluorine", group: "halogen", x: 17, y: 2 },
+    { z: 10, sym: "Ne", name: "Neon", group: "noble-gas", x: 18, y: 2 },
+
+    // Hàng 3
     { z: 11, sym: "Na", name: "Sodium", group: "alkali", x: 1, y: 3 },
     { z: 12, sym: "Mg", name: "Magnesium", group: "alkaline-earth", x: 2, y: 3 },
     { z: 13, sym: "Al", name: "Aluminium", group: "post-transition", x: 13, y: 3 },
+    { z: 14, sym: "Si", name: "Silicon", group: "metalloid", x: 14, y: 3 },
+    { z: 15, sym: "P", name: "Phosphorus", group: "non-metal", x: 15, y: 3 },
+    { z: 16, sym: "S", name: "Sulfur", group: "non-metal", x: 16, y: 3 },
     { z: 17, sym: "Cl", name: "Chlorine", group: "halogen", x: 17, y: 3 },
+    { z: 18, sym: "Ar", name: "Argon", group: "noble-gas", x: 18, y: 3 },
+
+    // Hàng 4 (Một số kim loại quan trọng)
     { z: 19, sym: "K", name: "Potassium", group: "alkali", x: 1, y: 4 },
+    { z: 20, sym: "Ca", name: "Calcium", group: "alkaline-earth", x: 2, y: 4 },
     { z: 26, sym: "Fe", name: "Iron", group: "transition", x: 8, y: 4 },
     { z: 29, sym: "Cu", name: "Copper", group: "transition", x: 11, y: 4 },
-    { z: 16, sym: "S", name: "Sulfur", group: "non-metal", x: 16, y: 3 },
+    { z: 30, sym: "Zn", name: "Zinc", group: "transition", x: 12, y: 4 },
+    { z: 47, sym: "Ag", name: "Silver", group: "transition", x: 11, y: 5 },
+    { z: 79, sym: "Au", name: "Gold", group: "transition", x: 11, y: 6 },
 ];
 
-// Danh sách phản ứng (Lưu ý: inputs phải khớp với sym ở trên)
+// 2. Danh sách Phản ứng (Thêm nhiều phản ứng phổ biến)
 const reactionsDB = [
-    { inputs: ["H", "O"], equation: "2H₂ + O₂ → 2H₂O", desc: "Nước" },
-    { inputs: ["Na", "Cl"], equation: "2Na + Cl₂ → 2NaCl", desc: "Muối ăn (Natri Clorua)" },
-    { inputs: ["C", "O"], equation: "C + O₂ → CO₂", desc: "Khí Carbonic" },
-    { inputs: ["H", "Cl"], equation: "H₂ + Cl₂ → 2HCl", desc: "Axit Clohydric" },
-    { inputs: ["Fe", "O"], equation: "4Fe + 3O₂ → 2Fe₂O₃", desc: "Rỉ sắt (Sắt III Oxit)" },
-    { inputs: ["Na", "H", "O"], equation: "2Na + 2H₂O → 2NaOH + H₂", desc: "Natri tác dụng với nước" },
-    { inputs: ["S", "O"], equation: "S + O₂ → SO₂", desc: "Khí Sunfuro" },
-    { inputs: ["Cu", "Cl"], equation: "Cu + Cl₂ → CuCl₂", desc: "Đồng (II) Clorua" }
+    // Phản ứng bạn đang test
+    { inputs: ["H", "B"], equation: "2B + 3H₂ → B₂H₆", desc: "Diborane (Hợp chất cao năng lượng)" },
+
+    // Phản ứng cơ bản
+    { inputs: ["H", "O"], equation: "2H₂ + O₂ → 2H₂O", desc: "Nước (Sự cháy của Hydro)" },
+    { inputs: ["Na", "Cl"], equation: "2Na + Cl₂ → 2NaCl", desc: "Muối ăn (Phản ứng cháy sáng vàng)" },
+    { inputs: ["C", "O"], equation: "C + O₂ → CO₂", desc: "Khí Carbonic (Hiệu ứng nhà kính)" },
+    { inputs: ["H", "Cl"], equation: "H₂ + Cl₂ → 2HCl", desc: "Khí Hiđro Clorua (Tan trong nước tạo Axit)" },
+    
+    // Phản ứng kim loại
+    { inputs: ["Fe", "O"], equation: "4Fe + 3O₂ → 2Fe₂O₃", desc: "Gỉ sắt (Oxit sắt III)" },
+    { inputs: ["Cu", "Cl"], equation: "Cu + Cl₂ → CuCl₂", desc: "Đồng(II) Clorua (Tinh thể màu xanh)" },
+    { inputs: ["Mg", "O"], equation: "2Mg + O₂ → 2MgO", desc: "Magie Oxit (Cháy sáng chói lòa)" },
+    
+    // Phản ứng nhiều chất
+    { inputs: ["Na", "H", "O"], equation: "2Na + 2H₂O → 2NaOH + H₂", desc: "Natri tác dụng mãnh liệt với nước" },
+    { inputs: ["S", "O"], equation: "S + O₂ → SO₂", desc: "Lưu huỳnh đioxit (Khí mùi hắc)" },
+    { inputs: ["N", "H"], equation: "N₂ + 3H₂ ⇌ 2NH₃", desc: "Amoniac (Nguyên liệu làm phân bón)" }
 ];
 
-/* --- PHẦN 2: LOGIC XỬ LÝ --- */
+/* =========================================
+   PHẦN 2: LOGIC XỬ LÝ (CONTROLLER)
+   ========================================= */
 
 const tableContainer = document.getElementById('periodic-table');
 const dropZone = document.getElementById('drop-zone');
 const mixContainer = document.getElementById('current-mix-container');
 const resultBox = document.getElementById('reaction-result');
+const equationDisplay = document.getElementById('equation-display');
+const productDesc = document.getElementById('product-desc');
 
 let currentIngredients = []; 
 
-// 1. Khởi tạo bảng tuần hoàn
+// --- KHỞI TẠO BẢNG TUẦN HOÀN ---
 function initTable() {
-    tableContainer.innerHTML = ""; // Xóa cũ nếu có
+    tableContainer.innerHTML = "";
     elementsData.forEach(el => {
         const div = document.createElement('div');
         div.className = `element ${el.group}`;
@@ -53,13 +88,17 @@ function initTable() {
             <span class="el-name">${el.name}</span>
         `;
 
-        // Kéo thả desktop
+        // Sự kiện Kéo (Desktop)
         div.draggable = true;
         div.addEventListener('dragstart', (e) => {
             e.dataTransfer.setData('application/json', JSON.stringify(el));
+            div.classList.add('dragging');
+        });
+        div.addEventListener('dragend', () => {
+            div.classList.remove('dragging');
         });
 
-        // Click (cho điện thoại hoặc thao tác nhanh)
+        // Sự kiện Click (Mobile/Tablet)
         div.addEventListener('click', () => {
             addToMix(el);
         });
@@ -68,7 +107,7 @@ function initTable() {
     });
 }
 
-// 2. Xử lý sự kiện thả (Drop)
+// --- XỬ LÝ KÉO THẢ ---
 dropZone.addEventListener('dragover', (e) => {
     e.preventDefault();
     dropZone.classList.add('hovered');
@@ -86,26 +125,30 @@ dropZone.addEventListener('drop', (e) => {
         const el = JSON.parse(data);
         addToMix(el);
     } catch (err) {
-        console.error("Lỗi khi thả:", err);
+        console.error("Lỗi dữ liệu drop:", err);
     }
 });
 
-// 3. Logic thêm chất
+// --- LOGIC THÊM VÀO BÌNH ---
 function addToMix(element) {
-    // Kiểm tra trùng lặp (nếu đã có H rồi thì không thêm H nữa để tránh lỗi logic so sánh)
+    // Kiểm tra xem chất này đã có chưa (để tránh spam click)
     const exists = currentIngredients.find(e => e.sym === element.sym);
     
     if (!exists) {
         currentIngredients.push(element);
         renderMixIngredients();
-        checkReaction(); // Kiểm tra ngay sau khi thêm
+        checkReaction(); // Kiểm tra ngay lập tức
     } else {
-        // Hiệu ứng rung hoặc báo đã có (tuỳ chọn)
-        console.log("Đã có chất này trong bình: " + element.sym);
+        // Hiệu ứng rung báo đã tồn tại (Optional)
+        const existingEl = Array.from(mixContainer.children).find(child => child.innerText.includes(element.sym));
+        if(existingEl) {
+            existingEl.style.transform = "scale(1.2)";
+            setTimeout(() => existingEl.style.transform = "scale(1)", 200);
+        }
     }
 }
 
-// 4. Vẽ lại các chất trong bình thí nghiệm
+// --- VẼ LẠI CÁC CHẤT TRONG BÌNH ---
 function renderMixIngredients() {
     mixContainer.innerHTML = '';
     
@@ -114,12 +157,16 @@ function renderMixIngredients() {
         currentIngredients.forEach(el => {
             const div = document.createElement('div');
             div.className = `element ${el.group}`;
+            // Style thu gọn cho icon trong bình
             div.style.width = '50px';
             div.style.height = '50px';
-            div.innerHTML = `<span class="el-sym">${el.sym}</span>`;
-            
-            // Tính năng click vào chất trong bình để xóa nó đi
+            div.style.minWidth = '50px';
+            div.style.cursor = 'pointer'; // Báo hiệu có thể click để xóa
             div.title = "Click để bỏ chất này ra";
+            
+            div.innerHTML = `<span class="el-sym" style="font-size:16px;">${el.sym}</span>`;
+            
+            // Click vào chất trong bình thì xóa nó đi
             div.onclick = () => removeIngredient(el.sym);
             
             mixContainer.appendChild(div);
@@ -129,47 +176,71 @@ function renderMixIngredients() {
     }
 }
 
+// --- XÓA CHẤT KHỎI BÌNH ---
 function removeIngredient(symbol) {
     currentIngredients = currentIngredients.filter(e => e.sym !== symbol);
     renderMixIngredients();
-    checkReaction(); // Kiểm tra lại sau khi xóa
+    checkReaction();
 }
 
-// 5. [QUAN TRỌNG] Kiểm tra phản ứng - Đã sửa lỗi
+// --- [QUAN TRỌNG] KIỂM TRA PHẢN ỨNG ---
 function checkReaction() {
-    // Lấy ra danh sách ký hiệu các chất đang có trong bình, ví dụ: ["H", "O"]
-    // .sort() để đảm bảo thứ tự không quan trọng (H trước hay O trước cũng được)
+    // 1. Lấy danh sách ký hiệu đang có và sắp xếp A-Z
     const currentSyms = currentIngredients.map(e => e.sym).sort();
-    
-    console.log("Đang có trong bình:", currentSyms); // Bật F12 tab Console để xem
 
+    // 2. Tìm trong Database
     const foundReaction = reactionsDB.find(reaction => {
-        // Copy mảng input của DB ra để sort (dùng [...array]) để tránh lỗi biến đổi dữ liệu gốc
         const recipeSyms = [...reaction.inputs].sort();
-        
-        // So sánh chuỗi JSON của 2 mảng
         return JSON.stringify(currentSyms) === JSON.stringify(recipeSyms);
     });
 
+    // 3. Hiển thị kết quả
     if (foundReaction) {
-        console.log("Tìm thấy phản ứng!", foundReaction.equation);
-        resultBox.classList.remove('hidden');
-        document.getElementById('equation-display').innerText = foundReaction.equation;
-        document.getElementById('product-desc').innerText = foundReaction.desc;
-        resultBox.style.borderColor = "#4CAF50"; // Màu xanh báo thành công
+        // ==> THÀNH CÔNG
+        showResult(
+            foundReaction.equation, 
+            foundReaction.desc, 
+            "success"
+        );
     } else {
-        console.log("Chưa có phản ứng nào khớp.");
-        resultBox.classList.add('hidden');
+        // ==> CHƯA TÌM THẤY
+        if (currentIngredients.length >= 2) {
+            // Có từ 2 chất trở lên mà không khớp -> Báo chưa rõ
+            showResult(
+                "???", 
+                "Chưa có dữ liệu phản ứng cho hỗn hợp này.", 
+                "warning"
+            );
+        } else {
+            // Mới có 0 hoặc 1 chất -> Ẩn bảng kết quả
+            resultBox.classList.add('hidden');
+        }
     }
 }
 
-// 6. Nút làm sạch
+// Hàm hiển thị UI kết quả
+function showResult(eq, desc, type) {
+    resultBox.classList.remove('hidden');
+    equationDisplay.innerText = eq;
+    productDesc.innerText = desc;
+
+    if (type === 'success') {
+        resultBox.style.borderColor = "#4CAF50"; // Xanh lá
+        resultBox.style.background = "rgba(76, 175, 80, 0.1)";
+        equationDisplay.style.color = "#4CAF50";
+    } else {
+        resultBox.style.borderColor = "#FF9800"; // Cam
+        resultBox.style.background = "rgba(255, 152, 0, 0.1)";
+        equationDisplay.style.color = "#FF9800";
+    }
+}
+
+// --- RESET LAB ---
 function resetLab() {
     currentIngredients = [];
     renderMixIngredients();
     resultBox.classList.add('hidden');
-    console.log("Đã làm sạch bình.");
 }
 
-// Khởi chạy
+// Chạy khởi tạo
 initTable();
