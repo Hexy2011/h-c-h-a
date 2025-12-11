@@ -1,46 +1,32 @@
 /* --- PHẦN 1: DỮ LIỆU --- */
 
-// 1. Database Nguyên tố (Mẫu đại diện, bạn có thể điền thêm đủ 118)
-// x: Cột (1-18), y: Hàng (1-7, 9-10 cho họ Lanthanides/Actinides)
 const elementsData = [
-    // Hàng 1
     { z: 1, sym: "H", name: "Hydrogen", group: "non-metal", x: 1, y: 1 },
     { z: 2, sym: "He", name: "Helium", group: "noble-gas", x: 18, y: 1 },
-    
-    // Hàng 2
     { z: 3, sym: "Li", name: "Lithium", group: "alkali", x: 1, y: 2 },
-    { z: 4, sym: "Be", name: "Beryllium", group: "alkaline-earth", x: 2, y: 2 },
-    { z: 5, sym: "B", name: "Boron", group: "metalloid", x: 13, y: 2 },
     { z: 6, sym: "C", name: "Carbon", group: "non-metal", x: 14, y: 2 },
     { z: 7, sym: "N", name: "Nitrogen", group: "non-metal", x: 15, y: 2 },
     { z: 8, sym: "O", name: "Oxygen", group: "non-metal", x: 16, y: 2 },
-    { z: 9, sym: "F", name: "Fluorine", group: "halogen", x: 17, y: 2 },
-    { z: 10, sym: "Ne", name: "Neon", group: "noble-gas", x: 18, y: 2 },
-
-    // Hàng 3 (Một số đại diện)
     { z: 11, sym: "Na", name: "Sodium", group: "alkali", x: 1, y: 3 },
     { z: 12, sym: "Mg", name: "Magnesium", group: "alkaline-earth", x: 2, y: 3 },
     { z: 13, sym: "Al", name: "Aluminium", group: "post-transition", x: 13, y: 3 },
     { z: 17, sym: "Cl", name: "Chlorine", group: "halogen", x: 17, y: 3 },
-    { z: 18, sym: "Ar", name: "Argon", group: "noble-gas", x: 18, y: 3 },
-
-    // Hàng 4 (Đại diện kim loại chuyển tiếp)
     { z: 19, sym: "K", name: "Potassium", group: "alkali", x: 1, y: 4 },
     { z: 26, sym: "Fe", name: "Iron", group: "transition", x: 8, y: 4 },
     { z: 29, sym: "Cu", name: "Copper", group: "transition", x: 11, y: 4 },
-    
-    // Ví dụ một nguyên tố Đất hiếm (Nằm ở hàng phụ)
-    { z: 57, sym: "La", name: "Lanthanum", group: "lanthanoid", x: 4, y: 9 }, // Hàng 9
+    { z: 16, sym: "S", name: "Sulfur", group: "non-metal", x: 16, y: 3 },
 ];
 
-// 2. Database Phản ứng (Thêm các phương trình vào đây)
+// Danh sách phản ứng (Lưu ý: inputs phải khớp với sym ở trên)
 const reactionsDB = [
-    { inputs: ["H", "O"], equation: "2H₂ + O₂ → 2H₂O", desc: "Nước (Phản ứng cháy nổ mạnh)" },
+    { inputs: ["H", "O"], equation: "2H₂ + O₂ → 2H₂O", desc: "Nước" },
     { inputs: ["Na", "Cl"], equation: "2Na + Cl₂ → 2NaCl", desc: "Muối ăn (Natri Clorua)" },
-    { inputs: ["C", "O"], equation: "C + O₂ → CO₂", desc: "Khí Carbonic (Sự cháy)" },
-    { inputs: ["H", "Cl"], equation: "H₂ + Cl₂ → 2HCl", desc: "Axit Clohydric (Khí)" },
-    { inputs: ["Fe", "O"], equation: "4Fe + 3O₂ → 2Fe₂O₃", desc: "Rỉ sắt (Oxit sắt III)" },
-    { inputs: ["Na", "H", "O"], equation: "2Na + 2H₂O → 2NaOH + H₂", desc: "Natri tác dụng với nước" }
+    { inputs: ["C", "O"], equation: "C + O₂ → CO₂", desc: "Khí Carbonic" },
+    { inputs: ["H", "Cl"], equation: "H₂ + Cl₂ → 2HCl", desc: "Axit Clohydric" },
+    { inputs: ["Fe", "O"], equation: "4Fe + 3O₂ → 2Fe₂O₃", desc: "Rỉ sắt (Sắt III Oxit)" },
+    { inputs: ["Na", "H", "O"], equation: "2Na + 2H₂O → 2NaOH + H₂", desc: "Natri tác dụng với nước" },
+    { inputs: ["S", "O"], equation: "S + O₂ → SO₂", desc: "Khí Sunfuro" },
+    { inputs: ["Cu", "Cl"], equation: "Cu + Cl₂ → CuCl₂", desc: "Đồng (II) Clorua" }
 ];
 
 /* --- PHẦN 2: LOGIC XỬ LÝ --- */
@@ -48,10 +34,13 @@ const reactionsDB = [
 const tableContainer = document.getElementById('periodic-table');
 const dropZone = document.getElementById('drop-zone');
 const mixContainer = document.getElementById('current-mix-container');
-let currentIngredients = []; // Danh sách các chất đang trong bình
+const resultBox = document.getElementById('reaction-result');
 
-// 1. Hàm vẽ bảng tuần hoàn
+let currentIngredients = []; 
+
+// 1. Khởi tạo bảng tuần hoàn
 function initTable() {
+    tableContainer.innerHTML = ""; // Xóa cũ nếu có
     elementsData.forEach(el => {
         const div = document.createElement('div');
         div.className = `element ${el.group}`;
@@ -64,17 +53,13 @@ function initTable() {
             <span class="el-name">${el.name}</span>
         `;
 
-        // Thiết lập Kéo (Drag)
+        // Kéo thả desktop
         div.draggable = true;
         div.addEventListener('dragstart', (e) => {
             e.dataTransfer.setData('application/json', JSON.stringify(el));
-            div.style.opacity = '0.5';
-        });
-        div.addEventListener('dragend', () => {
-            div.style.opacity = '1';
         });
 
-        // Click để thêm nhanh (cho điện thoại)
+        // Click (cho điện thoại hoặc thao tác nhanh)
         div.addEventListener('click', () => {
             addToMix(el);
         });
@@ -83,9 +68,9 @@ function initTable() {
     });
 }
 
-// 2. Xử lý vùng Thả (Drop Zone)
+// 2. Xử lý sự kiện thả (Drop)
 dropZone.addEventListener('dragover', (e) => {
-    e.preventDefault(); // Bắt buộc để cho phép drop
+    e.preventDefault();
     dropZone.classList.add('hovered');
 });
 
@@ -96,26 +81,34 @@ dropZone.addEventListener('dragleave', () => {
 dropZone.addEventListener('drop', (e) => {
     e.preventDefault();
     dropZone.classList.remove('hovered');
-    const data = e.dataTransfer.getData('application/json');
-    if (data) {
+    try {
+        const data = e.dataTransfer.getData('application/json');
         const el = JSON.parse(data);
         addToMix(el);
+    } catch (err) {
+        console.error("Lỗi khi thả:", err);
     }
 });
 
-// 3. Logic thêm chất và kiểm tra phản ứng
+// 3. Logic thêm chất
 function addToMix(element) {
-    // Kiểm tra nếu chất này chưa có trong bình (hoặc cho phép lặp lại tùy logic bạn muốn)
-    // Ở đây mình cho phép 1 loại nguyên tố xuất hiện 1 lần trong danh sách input để dễ tra cứu
-    if (!currentIngredients.some(e => e.sym === element.sym)) {
+    // Kiểm tra trùng lặp (nếu đã có H rồi thì không thêm H nữa để tránh lỗi logic so sánh)
+    const exists = currentIngredients.find(e => e.sym === element.sym);
+    
+    if (!exists) {
         currentIngredients.push(element);
         renderMixIngredients();
-        checkReaction();
+        checkReaction(); // Kiểm tra ngay sau khi thêm
+    } else {
+        // Hiệu ứng rung hoặc báo đã có (tuỳ chọn)
+        console.log("Đã có chất này trong bình: " + element.sym);
     }
 }
 
+// 4. Vẽ lại các chất trong bình thí nghiệm
 function renderMixIngredients() {
     mixContainer.innerHTML = '';
+    
     if (currentIngredients.length > 0) {
         dropZone.classList.add('has-items');
         currentIngredients.forEach(el => {
@@ -123,8 +116,12 @@ function renderMixIngredients() {
             div.className = `element ${el.group}`;
             div.style.width = '50px';
             div.style.height = '50px';
-            div.style.position = 'relative'; // Reset grid position
             div.innerHTML = `<span class="el-sym">${el.sym}</span>`;
+            
+            // Tính năng click vào chất trong bình để xóa nó đi
+            div.title = "Click để bỏ chất này ra";
+            div.onclick = () => removeIngredient(el.sym);
+            
             mixContainer.appendChild(div);
         });
     } else {
@@ -132,32 +129,46 @@ function renderMixIngredients() {
     }
 }
 
-// 4. Kiểm tra xem có phản ứng nào khớp không
+function removeIngredient(symbol) {
+    currentIngredients = currentIngredients.filter(e => e.sym !== symbol);
+    renderMixIngredients();
+    checkReaction(); // Kiểm tra lại sau khi xóa
+}
+
+// 5. [QUAN TRỌNG] Kiểm tra phản ứng - Đã sửa lỗi
 function checkReaction() {
-    // Lấy danh sách ký hiệu các chất đang có, sort để so sánh không phụ thuộc thứ tự
-    const currentSymbols = currentIngredients.map(e => e.sym).sort();
+    // Lấy ra danh sách ký hiệu các chất đang có trong bình, ví dụ: ["H", "O"]
+    // .sort() để đảm bảo thứ tự không quan trọng (H trước hay O trước cũng được)
+    const currentSyms = currentIngredients.map(e => e.sym).sort();
     
+    console.log("Đang có trong bình:", currentSyms); // Bật F12 tab Console để xem
+
     const foundReaction = reactionsDB.find(reaction => {
-        const recipeSymbols = reaction.inputs.sort();
-        // So sánh 2 mảng
-        return JSON.stringify(currentSymbols) === JSON.stringify(recipeSymbols);
+        // Copy mảng input của DB ra để sort (dùng [...array]) để tránh lỗi biến đổi dữ liệu gốc
+        const recipeSyms = [...reaction.inputs].sort();
+        
+        // So sánh chuỗi JSON của 2 mảng
+        return JSON.stringify(currentSyms) === JSON.stringify(recipeSyms);
     });
 
-    const resultBox = document.getElementById('reaction-result');
     if (foundReaction) {
+        console.log("Tìm thấy phản ứng!", foundReaction.equation);
         resultBox.classList.remove('hidden');
         document.getElementById('equation-display').innerText = foundReaction.equation;
         document.getElementById('product-desc').innerText = foundReaction.desc;
+        resultBox.style.borderColor = "#4CAF50"; // Màu xanh báo thành công
     } else {
+        console.log("Chưa có phản ứng nào khớp.");
         resultBox.classList.add('hidden');
     }
 }
 
-// 5. Reset
+// 6. Nút làm sạch
 function resetLab() {
     currentIngredients = [];
     renderMixIngredients();
-    document.getElementById('reaction-result').classList.add('hidden');
+    resultBox.classList.add('hidden');
+    console.log("Đã làm sạch bình.");
 }
 
 // Khởi chạy
