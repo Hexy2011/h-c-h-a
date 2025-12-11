@@ -8,37 +8,29 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-
-    <div class="container">
-        <header>
-            <h1>🧪 Phòng Thí Nghiệm Ảo</h1>
-            <p>Kéo nguyên tố vào vùng pha chế để xem phản ứng</p>
-        </header>
-
-        <div id="lab-bench">
-            <div id="drop-zone">
-                <div class="placeholder-text">
-                    <span style="font-size: 40px;">⚗️</span><br>
-                    Kéo và thả nguyên tố vào đây
-                </div>
-                <div id="current-mix-container"></div>
+    <div id="lab-bench">
+        <div id="top-controls">
+            <div>
+                <h1>⚗️ Phòng Thí Nghiệm</h1>
+                <span class="subtitle">Chạm nguyên tố để pha chế</span>
             </div>
-            
-            <div id="controls">
-                <button onclick="resetLab()" class="btn-reset">Làm sạch bình</button>
-            </div>
-
-            <div id="reaction-result" class="result-box hidden">
-                <h3>Phản ứng xảy ra!</h3>
-                <p id="equation-display" class="equation">H₂ + O₂ → H₂O</p>
-                <p id="product-desc" class="description">Nước</p>
-            </div>
+            <button onclick="resetLab()" class="btn-reset">Làm sạch</button>
         </div>
 
-        <div class="periodic-table-wrapper">
-            <div id="periodic-table">
-                </div>
+        <div id="drop-zone">
+            <div class="placeholder-text">Chọn nguyên tố bên dưới...</div>
+            <div id="current-mix-container"></div>
         </div>
+
+        <div id="reaction-result" class="result-box hidden">
+            <p id="equation-display" class="equation"></p>
+            <p id="product-desc"></p>
+        </div>
+    </div>
+
+    <div class="periodic-table-wrapper">
+        <div id="periodic-table">
+            </div>
     </div>
 
     <script src="script.js"></script>

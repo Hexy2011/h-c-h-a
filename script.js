@@ -1,11 +1,11 @@
 /* =========================================
-   PHẦN 1: DỮ LIỆU NGUYÊN TỐ (FULL 118)
+   PHẦN 1: DỮ LIỆU (DATABASE)
    ========================================= */
 
-// Hàm tạo dữ liệu nguyên tố nhanh để đỡ tốn dung lượng code
-// z: số hiệu, sym: ký hiệu, name: tên, g: nhóm, x: cột, y: hàng
+// Hàm tạo nhanh dữ liệu
 const createEl = (z, sym, name, group, x, y) => ({ z, sym, name, group, x, y });
 
+// 1. Danh sách 118 Nguyên tố
 const elementsData = [
     // --- CHU KỲ 1 ---
     createEl(1, "H", "Hydrogen", "non-metal", 1, 1),
@@ -71,10 +71,9 @@ const elementsData = [
     createEl(53, "I", "Iodine", "halogen", 17, 5),
     createEl(54, "Xe", "Xenon", "noble-gas", 18, 5),
 
-    // --- CHU KỲ 6 (Bao gồm Lanthanides) ---
+    // --- CHU KỲ 6 ---
     createEl(55, "Cs", "Caesium", "alkali", 1, 6),
     createEl(56, "Ba", "Barium", "alkaline-earth", 2, 6),
-    // 57-71 Lanthanides (Họ Lanthan) - Đặt xuống hàng 9
     createEl(57, "La", "Lanthanum", "lanthanoid", 4, 9),
     createEl(58, "Ce", "Cerium", "lanthanoid", 5, 9),
     createEl(59, "Pr", "Praseodymium", "lanthanoid", 6, 9),
@@ -90,7 +89,6 @@ const elementsData = [
     createEl(69, "Tm", "Thulium", "lanthanoid", 16, 9),
     createEl(70, "Yb", "Ytterbium", "lanthanoid", 17, 9),
     createEl(71, "Lu", "Lutetium", "lanthanoid", 18, 9),
-    // Tiếp tục chu kỳ 6
     createEl(72, "Hf", "Hafnium", "transition", 4, 6),
     createEl(73, "Ta", "Tantalum", "transition", 5, 6),
     createEl(74, "W", "Tungsten", "transition", 6, 6),
@@ -107,10 +105,9 @@ const elementsData = [
     createEl(85, "At", "Astatine", "halogen", 17, 6),
     createEl(86, "Rn", "Radon", "noble-gas", 18, 6),
 
-    // --- CHU KỲ 7 (Bao gồm Actinides) ---
+    // --- CHU KỲ 7 ---
     createEl(87, "Fr", "Francium", "alkali", 1, 7),
     createEl(88, "Ra", "Radium", "alkaline-earth", 2, 7),
-    // 89-103 Actinides (Họ Actini) - Đặt xuống hàng 10
     createEl(89, "Ac", "Actinium", "actinoid", 4, 10),
     createEl(90, "Th", "Thorium", "actinoid", 5, 10),
     createEl(91, "Pa", "Protactinium", "actinoid", 6, 10),
@@ -126,7 +123,6 @@ const elementsData = [
     createEl(101, "Md", "Mendelevium", "actinoid", 16, 10),
     createEl(102, "No", "Nobelium", "actinoid", 17, 10),
     createEl(103, "Lr", "Lawrencium", "actinoid", 18, 10),
-    // Tiếp tục chu kỳ 7
     createEl(104, "Rf", "Rutherfordium", "transition", 4, 7),
     createEl(105, "Db", "Dubnium", "transition", 5, 7),
     createEl(106, "Sg", "Seaborgium", "transition", 6, 7),
@@ -144,12 +140,8 @@ const elementsData = [
     createEl(118, "Og", "Oganesson", "noble-gas", 18, 7),
 ];
 
-/* =========================================
-   PHẦN 2: DỮ LIỆU PHẢN ỨNG (MỞ RỘNG)
-   ========================================= */
-
+// 2. Danh sách Phản ứng
 const reactionsDB = [
-    // --- PHẢN ỨNG CỦA HYDROGEN ---
     { inputs: ["H", "O"], equation: "2H₂ + O₂ → 2H₂O", desc: "Nước" },
     { inputs: ["H", "Cl"], equation: "H₂ + Cl₂ → 2HCl", desc: "Axit Clohydric (Khí)" },
     { inputs: ["H", "F"], equation: "H₂ + F₂ → 2HF", desc: "Axit Flohydric (Ăn mòn thủy tinh)" },
@@ -157,8 +149,6 @@ const reactionsDB = [
     { inputs: ["H", "S"], equation: "H₂ + S → H₂S", desc: "Khí Hidro Sunfua (Mùi trứng thối)" },
     { inputs: ["H", "C"], equation: "C + 2H₂ → CH₄", desc: "Khí Methan (Gas)" },
     { inputs: ["H", "B"], equation: "2B + 3H₂ → B₂H₆", desc: "Diborane" },
-
-    // --- PHẢN ỨNG CỦA OXYGEN (SỰ CHÁY) ---
     { inputs: ["C", "O"], equation: "C + O₂ → CO₂", desc: "Khí Carbonic" },
     { inputs: ["S", "O"], equation: "S + O₂ → SO₂", desc: "Khí Sunfuro" },
     { inputs: ["P", "O"], equation: "4P + 5O₂ → 2P₂O₅", desc: "Diphosphorus pentoxide" },
@@ -167,8 +157,6 @@ const reactionsDB = [
     { inputs: ["Cu", "O"], equation: "2Cu + O₂ → 2CuO", desc: "Đồng (II) Oxit (Màu đen)" },
     { inputs: ["Al", "O"], equation: "4Al + 3O₂ → 2Al₂O₃", desc: "Nhôm Oxit (Lớp bảo vệ nhôm)" },
     { inputs: ["Na", "O"], equation: "4Na + O₂ → 2Na₂O", desc: "Natri Oxit" },
-
-    // --- PHẢN ỨNG MUỐI (KIM LOẠI + HALOGEN) ---
     { inputs: ["Na", "Cl"], equation: "2Na + Cl₂ → 2NaCl", desc: "Muối ăn" },
     { inputs: ["K", "Cl"], equation: "2K + Cl₂ → 2KCl", desc: "Kali Clorua" },
     { inputs: ["Na", "Br"], equation: "2Na + Br₂ → 2NaBr", desc: "Natri Bromua" },
@@ -176,21 +164,17 @@ const reactionsDB = [
     { inputs: ["Fe", "Cl"], equation: "2Fe + 3Cl₂ → 2FeCl₃", desc: "Sắt (III) Clorua" },
     { inputs: ["Cu", "Cl"], equation: "Cu + Cl₂ → CuCl₂", desc: "Đồng (II) Clorua" },
     { inputs: ["Ag", "Cl"], equation: "2Ag + Cl₂ → 2AgCl", desc: "Bạc Clorua (Kết tủa trắng)" },
-
-    // --- PHẢN ỨNG VỚI NƯỚC (KIM LOẠI KIỀM) ---
     { inputs: ["Na", "H", "O"], equation: "2Na + 2H₂O → 2NaOH + H₂", desc: "Natri vào nước (Nổ nhẹ)" },
     { inputs: ["Li", "H", "O"], equation: "2Li + 2H₂O → 2LiOH + H₂", desc: "Lithi vào nước" },
     { inputs: ["K", "H", "O"], equation: "2K + 2H₂O → 2KOH + H₂", desc: "Kali vào nước (Nổ tím)" },
     { inputs: ["Ca", "H", "O"], equation: "Ca + 2H₂O → Ca(OH)₂ + H₂", desc: "Canxi vào nước (Sôi sục)" },
-
-    // --- CÁC HỢP CHẤT KHÁC ---
     { inputs: ["Fe", "S"], equation: "Fe + S → FeS", desc: "Sắt (II) Sunfua (Màu đen)" },
     { inputs: ["Zn", "S"], equation: "Zn + S → ZnS", desc: "Kẽm Sunfua (Phát quang)" },
-    { inputs: ["Hg", "S"], equation: "Hg + S → HgS", desc: "Chu sa (Thủy ngân phản ứng ngay thường)" }
+    { inputs: ["Hg", "S"], equation: "Hg + S → HgS", desc: "Chu sa" }
 ];
 
 /* =========================================
-   PHẦN 3: LOGIC ĐIỀU KHIỂN
+   PHẦN 3: LOGIC & ĐIỀU KHIỂN
    ========================================= */
 
 const tableContainer = document.getElementById('periodic-table');
@@ -199,10 +183,11 @@ const mixContainer = document.getElementById('current-mix-container');
 const resultBox = document.getElementById('reaction-result');
 const equationDisplay = document.getElementById('equation-display');
 const productDesc = document.getElementById('product-desc');
+const placeholder = document.querySelector('.placeholder-text');
 
 let currentIngredients = []; 
 
-// Khởi tạo bảng
+// 1. Khởi tạo bảng
 function initTable() {
     tableContainer.innerHTML = "";
     elementsData.forEach(el => {
@@ -217,21 +202,28 @@ function initTable() {
             <span class="el-name">${el.name}</span>
         `;
 
+        // LOGIC DESKTOP: KÉO THẢ
         div.draggable = true;
         div.addEventListener('dragstart', (e) => {
             e.dataTransfer.setData('application/json', JSON.stringify(el));
-            div.classList.add('dragging');
+            div.style.opacity = '0.4';
         });
-        div.addEventListener('dragend', () => div.classList.remove('dragging'));
-        div.addEventListener('click', () => addToMix(el));
+        div.addEventListener('dragend', () => div.style.opacity = '1');
+
+        // LOGIC MOBILE & CLICK NHANH: CHẠM LÀ CHỌN
+        div.addEventListener('click', () => {
+            addToMix(el);
+            // Hiệu ứng rung nhẹ trên Android
+            if (navigator.vibrate) navigator.vibrate(30);
+        });
 
         tableContainer.appendChild(div);
     });
 }
 
-// Logic Kéo thả
+// 2. Xử lý Drop Zone (Cho máy tính)
 dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('hovered'); });
-dropZone.addEventListener('dragleave', () => dropZone.classList.remove('hovered'));
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('hovered');
 dropZone.addEventListener('drop', (e) => {
     e.preventDefault();
     dropZone.classList.remove('hovered');
@@ -241,30 +233,57 @@ dropZone.addEventListener('drop', (e) => {
     } catch (err) {}
 });
 
+// 3. Logic thêm vào bình
 function addToMix(element) {
+    // Ẩn chữ hướng dẫn nếu có
+    if (placeholder) placeholder.style.display = 'none';
+
+    // Kiểm tra trùng (không thêm nếu đã có)
     if (!currentIngredients.find(e => e.sym === element.sym)) {
         currentIngredients.push(element);
         renderMixIngredients();
         checkReaction();
+        
+        // Tự động cuộn sang phải nếu danh sách dài (trên điện thoại)
+        dropZone.scrollLeft = dropZone.scrollWidth;
+    } else {
+        // Nếu đã có, nháy màu đỏ báo hiệu
+        const existingBtn = Array.from(mixContainer.children).find(c => c.innerText.includes(element.sym));
+        if (existingBtn) {
+            existingBtn.style.background = '#d32f2f';
+            setTimeout(() => existingBtn.style.background = '', 200);
+        }
     }
 }
 
+// 4. Vẽ lại bình chứa (Giao diện nhỏ gọn)
 function renderMixIngredients() {
     mixContainer.innerHTML = '';
-    if (currentIngredients.length > 0) {
-        dropZone.classList.add('has-items');
-        currentIngredients.forEach(el => {
-            const div = document.createElement('div');
-            div.className = `element ${el.group}`;
-            div.style.width = '50px'; div.style.height = '50px'; div.style.minWidth = '50px';
-            div.style.cursor = 'pointer';
-            div.title = "Click để bỏ ra";
-            div.innerHTML = `<span class="el-sym" style="font-size:16px;">${el.sym}</span>`;
-            div.onclick = () => removeIngredient(el.sym);
-            mixContainer.appendChild(div);
+    currentIngredients.forEach(el => {
+        const div = document.createElement('div');
+        div.className = `element ${el.group}`;
+        
+        // Style mini cho chất trong bình
+        Object.assign(div.style, {
+            width: '45px', height: '45px', minWidth: '45px',
+            position: 'relative', gridColumn: 'auto', gridRow: 'auto',
+            border: '2px solid #fff'
         });
-    } else {
-        dropZone.classList.remove('has-items');
+        
+        div.innerHTML = `<span class="el-sym" style="font-size: 14px;">${el.sym}</span>`;
+        div.title = "Chạm để xóa";
+        
+        // Chạm vào chất trong bình để xóa
+        div.onclick = (e) => {
+            e.stopPropagation(); // Ngăn click lan ra ngoài
+            removeIngredient(el.sym);
+        };
+        
+        mixContainer.appendChild(div);
+    });
+
+    if (currentIngredients.length === 0 && placeholder) {
+        placeholder.style.display = 'block';
     }
 }
 
@@ -274,6 +293,7 @@ function removeIngredient(symbol) {
     checkReaction();
 }
 
+// 5. Kiểm tra phản ứng
 function checkReaction() {
     const currentSyms = currentIngredients.map(e => e.sym).sort();
 
@@ -297,13 +317,14 @@ function showResult(eq, desc, type) {
     resultBox.classList.remove('hidden');
     equationDisplay.innerText = eq;
     productDesc.innerText = desc;
+    
     if (type === 'success') {
         resultBox.style.borderColor = "#4CAF50";
-        resultBox.style.background = "rgba(76, 175, 80, 0.1)";
+        resultBox.style.background = "rgba(76, 175, 80, 0.15)";
         equationDisplay.style.color = "#4CAF50";
     } else {
         resultBox.style.borderColor = "#FF9800";
-        resultBox.style.background = "rgba(255, 152, 0, 0.1)";
+        resultBox.style.background = "rgba(255, 152, 0, 0.15)";
         equationDisplay.style.color = "#FF9800";
     }
 }
@@ -312,6 +333,8 @@ function resetLab() {
     currentIngredients = [];
     renderMixIngredients();
     resultBox.classList.add('hidden');
+    if (placeholder) placeholder.style.display = 'block';
 }
 
+// Kích hoạt
 initTable();
