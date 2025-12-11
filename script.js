@@ -5,7 +5,7 @@
 // Hàm tạo nhanh dữ liệu
 const createEl = (z, sym, name, group, x, y) => ({ z, sym, name, group, x, y });
 
-// 1. Danh sách 118 Nguyên tố
+// 1. Danh sách 118 Nguyên tố (Đầy đủ)
 const elementsData = [
     // --- CHU KỲ 1 ---
     createEl(1, "H", "Hydrogen", "non-metal", 1, 1),
@@ -71,7 +71,7 @@ const elementsData = [
     createEl(53, "I", "Iodine", "halogen", 17, 5),
     createEl(54, "Xe", "Xenon", "noble-gas", 18, 5),
 
-    // --- CHU KỲ 6 ---
+    // --- CHU KỲ 6 (Bao gồm Lanthanides) ---
     createEl(55, "Cs", "Caesium", "alkali", 1, 6),
     createEl(56, "Ba", "Barium", "alkaline-earth", 2, 6),
     createEl(57, "La", "Lanthanum", "lanthanoid", 4, 9),
@@ -105,7 +105,7 @@ const elementsData = [
     createEl(85, "At", "Astatine", "halogen", 17, 6),
     createEl(86, "Rn", "Radon", "noble-gas", 18, 6),
 
-    // --- CHU KỲ 7 ---
+    // --- CHU KỲ 7 (Bao gồm Actinides) ---
     createEl(87, "Fr", "Francium", "alkali", 1, 7),
     createEl(88, "Ra", "Radium", "alkaline-earth", 2, 7),
     createEl(89, "Ac", "Actinium", "actinoid", 4, 10),
@@ -140,37 +140,48 @@ const elementsData = [
     createEl(118, "Og", "Oganesson", "noble-gas", 18, 7),
 ];
 
-// 2. Danh sách Phản ứng
+// 2. Danh sách Phản ứng (ĐÃ CẬP NHẬT NHIỀU HƠN)
 const reactionsDB = [
-    { inputs: ["H", "O"], equation: "2H₂ + O₂ → 2H₂O", desc: "Nước" },
-    { inputs: ["H", "Cl"], equation: "H₂ + Cl₂ → 2HCl", desc: "Axit Clohydric (Khí)" },
+    // --- HỢP CHẤT CƠ BẢN ---
+    { inputs: ["H", "O"], equation: "2H₂ + O₂ → 2H₂O", desc: "Nước (Sự sống)" },
+    { inputs: ["H", "N"], equation: "N₂ + 3H₂ ⇌ 2NH₃", desc: "Amoniac (Nguyên liệu phân bón)" },
+    { inputs: ["H", "C"], equation: "C + 2H₂ → CH₄", desc: "Metan (Khí thiên nhiên)" },
+    { inputs: ["H", "Cl"], equation: "H₂ + Cl₂ → 2HCl", desc: "Khí Hydro Clorua (Tạo Axit)" },
     { inputs: ["H", "F"], equation: "H₂ + F₂ → 2HF", desc: "Axit Flohydric (Ăn mòn thủy tinh)" },
-    { inputs: ["H", "N"], equation: "N₂ + 3H₂ ⇌ 2NH₃", desc: "Amoniac (Làm phân bón)" },
-    { inputs: ["H", "S"], equation: "H₂ + S → H₂S", desc: "Khí Hidro Sunfua (Mùi trứng thối)" },
-    { inputs: ["H", "C"], equation: "C + 2H₂ → CH₄", desc: "Khí Methan (Gas)" },
+    { inputs: ["H", "S"], equation: "H₂ + S → H₂S", desc: "Hydro Sunfua (Mùi trứng thối)" },
     { inputs: ["H", "B"], equation: "2B + 3H₂ → B₂H₆", desc: "Diborane" },
-    { inputs: ["C", "O"], equation: "C + O₂ → CO₂", desc: "Khí Carbonic" },
-    { inputs: ["S", "O"], equation: "S + O₂ → SO₂", desc: "Khí Sunfuro" },
-    { inputs: ["P", "O"], equation: "4P + 5O₂ → 2P₂O₅", desc: "Diphosphorus pentoxide" },
-    { inputs: ["Mg", "O"], equation: "2Mg + O₂ → 2MgO", desc: "Magie Oxit (Cháy sáng trắng)" },
-    { inputs: ["Fe", "O"], equation: "3Fe + 2O₂ → Fe₃O₄", desc: "Oxit sắt từ" },
-    { inputs: ["Cu", "O"], equation: "2Cu + O₂ → 2CuO", desc: "Đồng (II) Oxit (Màu đen)" },
-    { inputs: ["Al", "O"], equation: "4Al + 3O₂ → 2Al₂O₃", desc: "Nhôm Oxit (Lớp bảo vệ nhôm)" },
+
+    // --- SỰ CHÁY (OXYGEN) ---
+    { inputs: ["C", "O"], equation: "C + O₂ → CO₂", desc: "Carbon Dioxide (Hiệu ứng nhà kính)" },
+    { inputs: ["S", "O"], equation: "S + O₂ → SO₂", desc: "Lưu huỳnh đioxit (Mưa axit)" },
+    { inputs: ["P", "O"], equation: "4P + 5O₂ → 2P₂O₅", desc: "Điphotpho Pentaoxit" },
+    { inputs: ["Mg", "O"], equation: "2Mg + O₂ → 2MgO", desc: "Magie Oxit (Cháy sáng chói lòa)" },
+    { inputs: ["Fe", "O"], equation: "3Fe + 2O₂ → Fe₃O₄", desc: "Oxit sắt từ (Gỉ sắt)" },
+    { inputs: ["Cu", "O"], equation: "2Cu + O₂ → 2CuO", desc: "Đồng(II) Oxit (Màu đen)" },
+    { inputs: ["Al", "O"], equation: "4Al + 3O₂ → 2Al₂O₃", desc: "Nhôm Oxit" },
     { inputs: ["Na", "O"], equation: "4Na + O₂ → 2Na₂O", desc: "Natri Oxit" },
+
+    // --- MUỐI HALOGEN ---
     { inputs: ["Na", "Cl"], equation: "2Na + Cl₂ → 2NaCl", desc: "Muối ăn" },
     { inputs: ["K", "Cl"], equation: "2K + Cl₂ → 2KCl", desc: "Kali Clorua" },
-    { inputs: ["Na", "Br"], equation: "2Na + Br₂ → 2NaBr", desc: "Natri Bromua" },
-    { inputs: ["Al", "Cl"], equation: "2Al + 3Cl₂ → 2AlCl₃", desc: "Nhôm Clorua" },
-    { inputs: ["Fe", "Cl"], equation: "2Fe + 3Cl₂ → 2FeCl₃", desc: "Sắt (III) Clorua" },
-    { inputs: ["Cu", "Cl"], equation: "Cu + Cl₂ → CuCl₂", desc: "Đồng (II) Clorua" },
+    { inputs: ["Ca", "Cl"], equation: "Ca + Cl₂ → CaCl₂", desc: "Canxi Clorua" },
+    { inputs: ["Fe", "Cl"], equation: "2Fe + 3Cl₂ → 2FeCl₃", desc: "Sắt(III) Clorua" },
+    { inputs: ["Cu", "Cl"], equation: "Cu + Cl₂ → CuCl₂", desc: "Đồng(II) Clorua (Màu xanh)" },
     { inputs: ["Ag", "Cl"], equation: "2Ag + Cl₂ → 2AgCl", desc: "Bạc Clorua (Kết tủa trắng)" },
-    { inputs: ["Na", "H", "O"], equation: "2Na + 2H₂O → 2NaOH + H₂", desc: "Natri vào nước (Nổ nhẹ)" },
+    { inputs: ["Al", "Cl"], equation: "2Al + 3Cl₂ → 2AlCl₃", desc: "Nhôm Clorua" },
+    { inputs: ["Na", "Br"], equation: "2Na + Br₂ → 2NaBr", desc: "Natri Bromua" },
+
+    // --- KIM LOẠI + NƯỚC ---
     { inputs: ["Li", "H", "O"], equation: "2Li + 2H₂O → 2LiOH + H₂", desc: "Lithi vào nước" },
-    { inputs: ["K", "H", "O"], equation: "2K + 2H₂O → 2KOH + H₂", desc: "Kali vào nước (Nổ tím)" },
+    { inputs: ["Na", "H", "O"], equation: "2Na + 2H₂O → 2NaOH + H₂", desc: "Natri vào nước (Chạy trên mặt nước)" },
+    { inputs: ["K", "H", "O"], equation: "2K + 2H₂O → 2KOH + H₂", desc: "Kali vào nước (Bùng cháy tím)" },
     { inputs: ["Ca", "H", "O"], equation: "Ca + 2H₂O → Ca(OH)₂ + H₂", desc: "Canxi vào nước (Sôi sục)" },
-    { inputs: ["Fe", "S"], equation: "Fe + S → FeS", desc: "Sắt (II) Sunfua (Màu đen)" },
+
+    // --- CÁC HỢP CHẤT KHÁC ---
+    { inputs: ["Fe", "S"], equation: "Fe + S → FeS", desc: "Sắt(II) Sunfua (Màu đen)" },
     { inputs: ["Zn", "S"], equation: "Zn + S → ZnS", desc: "Kẽm Sunfua (Phát quang)" },
-    { inputs: ["Hg", "S"], equation: "Hg + S → HgS", desc: "Chu sa" }
+    { inputs: ["Hg", "S"], equation: "Hg + S → HgS", desc: "Chu sa (Thủy ngân)" },
+    { inputs: ["Au", "Cl"], equation: "2Au + 3Cl₂ → 2AuCl₃", desc: "Vàng Clorua" }
 ];
 
 /* =========================================
@@ -222,11 +233,17 @@ function initTable() {
 }
 
 // 2. Xử lý Drop Zone (Cho máy tính)
-dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('hovered'); });
-dropZone.addEventListener('dragleave', () => dropZone.classList.remove('hovered');
+dropZone.addEventListener('dragover', (e) => { 
+    e.preventDefault(); 
+    dropZone.classList.add('active'); 
+});
+
+// SỬA LỖI: Đã bỏ dấu chấm phẩy thừa ở đây
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('active'));
+
 dropZone.addEventListener('drop', (e) => {
     e.preventDefault();
-    dropZone.classList.remove('hovered');
+    dropZone.classList.remove('active');
     try {
         const data = e.dataTransfer.getData('application/json');
         addToMix(JSON.parse(data));
@@ -248,10 +265,12 @@ function addToMix(element) {
         dropZone.scrollLeft = dropZone.scrollWidth;
     } else {
         // Nếu đã có, nháy màu đỏ báo hiệu
-        const existingBtn = Array.from(mixContainer.children).find(c => c.innerText.includes(element.sym));
-        if (existingBtn) {
-            existingBtn.style.background = '#d32f2f';
-            setTimeout(() => existingBtn.style.background = '', 200);
+        const items = mixContainer.children;
+        for (let item of items) {
+            if (item.innerText.includes(element.sym)) {
+                item.style.borderColor = "#d32f2f";
+                setTimeout(() => item.style.borderColor = "#fff", 300);
+            }
         }
     }
 }
@@ -267,7 +286,7 @@ function renderMixIngredients() {
         Object.assign(div.style, {
             width: '45px', height: '45px', minWidth: '45px',
             position: 'relative', gridColumn: 'auto', gridRow: 'auto',
-            border: '2px solid #fff'
+            border: '2px solid #fff', margin: '0'
         });
         
         div.innerHTML = `<span class="el-sym" style="font-size: 14px;">${el.sym}</span>`;
@@ -308,13 +327,13 @@ function checkReaction() {
         if (currentIngredients.length >= 2) {
             showResult("???", "Chưa có dữ liệu phản ứng cho hỗn hợp này.", "warning");
         } else {
-            resultBox.classList.add('hidden');
+            resultBox.classList.remove('show');
         }
     }
 }
 
 function showResult(eq, desc, type) {
-    resultBox.classList.remove('hidden');
+    resultBox.classList.add('show');
     equationDisplay.innerText = eq;
     productDesc.innerText = desc;
     
@@ -329,10 +348,11 @@ function showResult(eq, desc, type) {
     }
 }
 
-function resetLab() {
+// Gán hàm vào window để nút HTML gọi được
+window.resetLab = function() {
     currentIngredients = [];
     renderMixIngredients();
-    resultBox.classList.add('hidden');
+    resultBox.classList.remove('show');
     if (placeholder) placeholder.style.display = 'block';
 }
 
