@@ -2,17 +2,18 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Phòng Thí Nghiệm Hóa Học Ảo</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
+
     <div id="lab-bench">
         <div id="top-controls">
             <div>
                 <h1>⚗️ Phòng Thí Nghiệm</h1>
-                <span class="subtitle">Chạm nguyên tố để pha chế</span>
+                <span class="subtitle">Chạm hoặc Kéo nguyên tố để pha chế</span>
             </div>
             <button onclick="resetLab()" class="btn-reset">Làm sạch</button>
         </div>
@@ -22,7 +23,7 @@
             <div id="current-mix-container"></div>
         </div>
 
-        <div id="reaction-result" class="result-box hidden">
+        <div id="reaction-result" class="result-box">
             <p id="equation-display" class="equation"></p>
             <p id="product-desc"></p>
         </div>
